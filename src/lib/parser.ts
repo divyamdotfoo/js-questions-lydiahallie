@@ -57,16 +57,11 @@ const sanitizeContent = async (content: string) => {
           ? explanationStr.slice(explanationStr.indexOf("\n"))
           : null,
         answer,
+        id: nanoid(10),
       };
     });
   };
   return arrageData(results);
-};
-
-export const parser = async (path: string) => {
-  const readmeContent = await getReadme(path);
-  if (!readmeContent) return null;
-  return sanitizeContent(readmeContent);
 };
 
 export const allPaths: Record<string, string> = {
@@ -96,5 +91,11 @@ export const allPaths: Record<string, string> = {
 };
 // not working
 // bosanski arabicSA portugeseBR thai chinese
+export const parser = async (path: string) => {
+  const readmeContent = await getReadme(path);
+  if (!readmeContent) return null;
+  return sanitizeContent(readmeContent);
+};
 
 export const getPath = (lang: string) => allPaths[lang] ?? null;
+export type Question = NonNullable<Awaited<ReturnType<typeof parser>>>[number];

@@ -1,3 +1,4 @@
+import { QuestionData } from "@/components/question";
 import { getPath, parser, allPaths } from "@/lib/parser";
 import { notFound } from "next/navigation";
 
@@ -8,15 +9,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
     if (!path) notFound();
     const data = await parser(path);
     if (!data?.length) return null;
-    return (
-      <div>
-        {data.map((q, i) => (
-          <p key={i}>
-            {i + 1} {q.question}
-          </p>
-        ))}
-      </div>
-    );
+    return <QuestionData question={data[0]} />;
   } catch (e) {
     console.log(e);
     notFound();

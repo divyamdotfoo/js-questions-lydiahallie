@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 export default async function Page() {
-  return <div>home page</div>;
+  redirect("/english");
 }
